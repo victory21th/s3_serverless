@@ -18,6 +18,7 @@ You need to setup aws account and configure with **aws configure** command.
 
 ```bash
 npm install -g serverless
+npm install
 ```
 ## Configuration
 You can set configuration in serverless.yml
