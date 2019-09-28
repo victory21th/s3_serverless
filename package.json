@@ -1,0 +1,14 @@
+{
+  "name": "serverless_s3",
+  "version": "1.0.0",
+  "description": "<!-- title: 'S3 Handler' description: 'This lambda function retrived newly created files in s3 bucket and print the content and move them to another directory.' layout: Doc framework: v1 platform: AWS language: Python authorLink: 'https://github.com/victory21th' authorName: 'Rennan' --> # S3 File Handler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serverless-python-requirements": "^5.0.0"
+  }
+}

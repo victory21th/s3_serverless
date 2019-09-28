@@ -1,0 +1,68 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: serverless-s3
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+plugins:
+  - serverless-python-requirements
+
+package:
+  exclude:
+    - .idea/**
+    - .requirements/**
+    - venv/**
+    - README.md
+    - package.json
+    - package-lock.json
+    - requirements.txt
+
+
+
+
+provider:
+  name: aws
+  runtime: python3.7
+
+  stage: dev
+  region: us-east-1
+  environment:
+        S3_BUCKET_NAME: rennantest123
+        S3_KEY_BASE: Incoming
+        S3_NEW_KEY_BASE: Processed
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+        - s3:DeleteObject
+      Resource:
+        - 'arn:aws:s3:::${self:provider.environment.S3_BUCKET_NAME}/*'
+
+functions:
+  main:
+    handler: handler.main
+    name: s3_upload_handler
+    description: This function read file whenever new file uploaded to s3 and process it.
+    events:
+      - s3:
+          bucket: ${self:provider.environment.S3_BUCKET_NAME}
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: Incoming/
+
